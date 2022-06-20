@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import SideNav from "./components/navigation/SideNav.vue";
+import SideNav from "./components/sideNav/SideNav.vue";
 
 export default {
   components: {
@@ -28,7 +28,7 @@ html {
 :root {
   --PRIMARY_COLOR: rgb(29, 155, 240);
   --BG_COLOR_0: rgb(255, 255, 255);
-  --BG_COLOR_1: rgb(247, 247, 247);
+  --BG_COLOR_1: rgb(247, 249, 249);
   --BG_COLOR_2: rgb(239, 243, 244);
   --BG_COLOR_3: rgb(239, 241, 241);
   --BG_COLOR_4: rgb(231, 231, 232);
@@ -48,6 +48,9 @@ html {
   --CONTENT_WIDTH_0: 600px;
   --CONTENT_WIDTH_1: 920px;
   --CONTENT_WIDTH_2: 990px;
+  --LEFT_CONTENT_WIDTH: 600px;
+  --RIGHT_CONTENT_WIDTH_0: 290px;
+  --RIGHT_CONTENT_WIDTH_1: 350px;
 }
 
 #app {

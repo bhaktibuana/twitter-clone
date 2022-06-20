@@ -8,44 +8,33 @@
       </div>
 
       <div class="nav-item-container">
-        <router-link class="nav-item active" :to="{ name: 'Home' }">
-          <div>
-            <span class="icon">
-              <font-awesome-icon icon="fa-solid fa-house" size="1x" />
-            </span>
-            <span class="item-text">Home</span>
-          </div>
-        </router-link>
+        <SideNavItem
+          :pageName="pageName"
+          :title="'Home'"
+          :param="null"
+          :icon="'fa-house'"
+        />
 
-        <router-link class="nav-item" :to="{ name: 'Home' }">
-          <div>
-            <span class="icon">
-              <font-awesome-icon
-                icon="fa-solid fa-magnifying-glass"
-                size="1x"
-              />
-            </span>
-            <span class="item-text">Search</span>
-          </div>
-        </router-link>
+        <SideNavItem
+          :pageName="pageName"
+          :title="'Search'"
+          :param="'asd'"
+          :icon="'fa-magnifying-glass'"
+        />
 
-        <router-link class="nav-item" :to="{ name: 'Home' }">
-          <div>
-            <span class="icon">
-              <font-awesome-icon icon="fa-solid fa-bell" size="1x" />
-            </span>
-            <span class="item-text">Notification</span>
-          </div>
-        </router-link>
+        <SideNavItem
+          :pageName="pageName"
+          :title="'Notification'"
+          :param="null"
+          :icon="'fa-bell'"
+        />
 
-        <router-link class="nav-item" :to="{ name: 'Home' }">
-          <div>
-            <span class="icon">
-              <font-awesome-icon icon="fa-solid fa-user" size="1x" />
-            </span>
-            <span class="item-text">Profile</span>
-          </div>
-        </router-link>
+        <SideNavItem
+          :pageName="pageName"
+          :title="'Profile'"
+          :param="'hexorascii'"
+          :icon="'fa-user'"
+        />
       </div>
 
       <div class="tweet-button">
@@ -59,10 +48,10 @@
     </div>
 
     <div class="nav-user">
-      <router-link :to="{ name: 'Home' }">
+      <router-link :to="{ name: 'Profile', params: { param: 'hexorascii' } }">
         <div class="user-container">
           <div class="image-container">
-            <img src="../../assets/user-bhakti.jpg" alt="user">
+            <img src="../../assets/user-bhakti.jpg" alt="user" />
           </div>
 
           <div class="user-info">
@@ -76,7 +65,23 @@
 </template>
 
 <script>
-export default {};
+import { useStore } from "vuex";
+import { computed } from "vue";
+import SideNavItem from "./SideNavItem.vue";
+
+export default {
+  components: {
+    SideNavItem,
+  },
+  setup() {
+    const store = useStore();
+    const pageName = computed(() => store.state.pageName);
+
+    return {
+      pageName,
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -180,72 +185,6 @@ export default {};
     height: auto;
     margin: 2px 0 4px;
     flex-direction: column;
-
-    & > a.nav-item {
-      display: flex;
-      width: 100%;
-      height: 58px;
-      padding: 4px 0;
-      text-decoration: none;
-      justify-content: center;
-
-      &:hover > div {
-        background: var(--BG_COLOR_4);
-      }
-
-      & > div {
-        display: flex;
-        width: auto;
-        height: 100%;
-        align-items: center;
-        color: var(--TEXT_COLOR_0);
-        padding: 12px;
-        border-radius: 2rem;
-        background: var(--BG_COLOR_0);
-        transition: all 0.2s ease-in-out;
-
-        & > span.icon {
-          display: flex;
-          width: 1.75rem;
-          height: 1.75rem;
-          justify-content: center;
-          align-items: center;
-          font-size: 1.5rem;
-        }
-
-        & > span.item-text {
-          display: none;
-          align-content: center;
-          width: auto;
-          margin: 0 16px 0 20px;
-          font-size: 20px;
-        }
-      }
-
-      &.active > div {
-        background: var(--BG_COLOR_4);
-      }
-
-      @media screen and (min-width: 1282px) {
-        justify-content: flex-start;
-
-        & > div > span.item-text {
-          display: flex;
-        }
-
-        &.active {
-          font-weight: bold;
-
-          & > div {
-            background: inherit;
-          }
-        }
-
-        &:hover > div {
-          background: var(--BG_COLOR_4);
-        }
-      }
-    }
   }
 
   & > .tweet-button {
