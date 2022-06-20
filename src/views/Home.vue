@@ -143,7 +143,6 @@ export default {
     height: 500px;
     flex-direction: column;
     align-items: center;
-    background: red;
   }
 }
 
