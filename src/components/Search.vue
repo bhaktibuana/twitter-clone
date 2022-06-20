@@ -45,7 +45,14 @@ export default {
   position: sticky;
   top: 0;
   left: 0;
-  background: rgba(255, 255, 255, 0.85);
+  background: linear-gradient(
+    112.83deg,
+    rgba(255, 255, 255, 0.82),
+    rgba(255, 255, 255, 0.8) 110.84%
+  );
+  backdrop-filter: blur(21px);
+  -webkit-backdrop-filter: blur(21px);
+  z-index: 3;
 
   & > .search-container {
     display: flex;

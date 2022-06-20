@@ -58,7 +58,7 @@ html {
   -moz-osx-font-smoothing: grayscale;
   display: flex;
   width: 100%;
-  height: 3000px;
+  height: auto;
   min-height: 100vh;
   background: var(--LIGHT_COLOR);
 }

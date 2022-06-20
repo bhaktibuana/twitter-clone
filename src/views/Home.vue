@@ -1,6 +1,12 @@
 <template>
   <div class="home">
-    <div class="left-content-container"></div>
+    <div class="left-content-container">
+      <TopNav :pageName="'Home'" />
+      
+      <div class="page-content">
+
+      </div>
+    </div>
 
     <div class="right-content-container">
       <div
@@ -24,6 +30,7 @@ import Search from "../components/Search.vue";
 import Trends from "../components/trends/Trends.vue";
 import Suggest from "../components/suggest/Suggest.vue";
 import Footer from "../components/Footer.vue";
+import TopNav from "../components/TopNav.vue";
 
 export default {
   components: {
@@ -31,10 +38,10 @@ export default {
     Trends,
     Suggest,
     Footer,
+    TopNav,
   },
   setup() {
     const { pageName, changePageName } = setPageName("Home");
-
     const rghtContent = ref(null);
     const topOffset = ref(0);
 
@@ -128,6 +135,15 @@ export default {
 
   @media screen and (min-width: 688px) {
     width: var(--LEFT_CONTENT_WIDTH);
+  }
+
+  & > .page-content {
+    display: flex;
+    width: 100%;
+    height: 500px;
+    flex-direction: column;
+    align-items: center;
+    background: red;
   }
 }
 

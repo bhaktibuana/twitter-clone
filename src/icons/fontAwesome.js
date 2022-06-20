@@ -7,6 +7,7 @@ import {
   faBell,
   faUser,
   faFeatherPointed,
+  faArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -15,7 +16,8 @@ library.add(
   faMagnifyingGlass,
   faBell,
   faUser,
-  faFeatherPointed
+  faFeatherPointed,
+  faArrowLeft
 );
 
 export default FontAwesomeIcon;
