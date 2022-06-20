@@ -1,6 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
+import Search from "../views/Search.vue";
+import Notification from "../views/Notification.vue";
 import Profile from "../views/Profile.vue";
+import NotFound from "../views/NotFound.vue";
 
 const routes = [
   {
@@ -9,11 +12,27 @@ const routes = [
     component: Home,
   },
   {
-    path: "/:username",
+    path: "/user/:param",
     name: "Profile",
     component: Profile,
     props: true,
   },
+  {
+    path: "/search/:param",
+    name: "Search",
+    component: Search,
+    props: true,
+  },
+  {
+    path: "/notification",
+    name: "Notification",
+    component: Notification,
+  },
+  {
+    path: "/:catchAll(.*)",
+    name: "NotFound",
+    component: NotFound,
+  }
 ];
 
 const router = createRouter({

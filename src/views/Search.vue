@@ -1,6 +1,6 @@
 <template>
-  <div class="profile">
-    Profile Page
+  <div class="search">
+    Search Page
   </div>
 </template>
 
@@ -10,7 +10,7 @@ import setPageName from "../utils/setPageName";
 
 export default {
   setup() {
-    const { pageName, changePageName } = setPageName("Profile");
+    const { pageName, changePageName } = setPageName("Search");
 
     onMounted(() => {
       changePageName();
@@ -23,4 +23,6 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+
+</style>
