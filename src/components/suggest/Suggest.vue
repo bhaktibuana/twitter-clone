@@ -28,19 +28,19 @@ export default {
         id: 1,
         name: "IU",
         username: "dlwlrma",
-        image: "lee-ji-eun.png",
+        image: "lee-ji-eun.jpg",
       },
       {
         id: 2,
         name: "Kim Se-Jeong",
         username: "clean_0828",
-        image: "kim-se-jeong.jpeg",
+        image: "kim-se-jeong.jpg",
       },
       {
         id: 3,
         name: "Elon Musk",
         username: "elonmusk",
-        image: "elon-musk.jpeg",
+        image: "elon-musk.jpg",
       }
     ]);
 

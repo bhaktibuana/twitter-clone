@@ -2,6 +2,8 @@ import { createStore } from "vuex";
 
 export default createStore({
   state: {
+    userName: "hexorascii",
+    userData: null,
     pageName: "",
   },
   getters: {},
@@ -9,7 +11,15 @@ export default createStore({
     setPageName(state, pageName) {
       state.pageName = pageName;
     },
+
+    setUserData(state, userData) {
+      state.userData = userData;
+    },
   },
-  actions: {},
+  actions: {
+    setUserData({ commit }, userData) {
+      commit("setUserData", userData);
+    },
+  },
   modules: {},
 });

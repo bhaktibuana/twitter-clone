@@ -32,7 +32,7 @@
         <SideNavItem
           :pageName="pageName"
           :title="'Profile'"
-          :param="'hexorascii'"
+          :param="userName"
           :icon="'fa-user'"
         />
       </div>
@@ -48,15 +48,15 @@
     </div>
 
     <div class="nav-user">
-      <router-link :to="{ name: 'Profile', params: { param: 'hexorascii' } }">
+      <router-link :to="{ name: 'Profile', params: { param: userName } }">
         <div class="user-container">
           <div class="image-container">
-            <img src="../../assets/user-bhakti.jpg" alt="user" />
+            <img src="../../assets/user.jpg" alt="user" />
           </div>
 
           <div class="user-info">
-            <p class="name">Bhakti</p>
-            <p class="username">@hexorascii</p>
+            <p class="name">{{ userData.name }}</p>
+            <p class="username">@{{ userData.username }}</p>
           </div>
         </div>
       </router-link>
@@ -66,8 +66,9 @@
 
 <script>
 import { useStore } from "vuex";
-import { computed } from "vue";
+import { computed, onMounted, onUpdated } from "vue";
 import SideNavItem from "./SideNavItem.vue";
+import getUserData from "../../utils/getUserData";
 
 export default {
   components: {
@@ -76,9 +77,21 @@ export default {
   setup() {
     const store = useStore();
     const pageName = computed(() => store.state.pageName);
+    const userName = computed(() => store.state.userName);
+    const { userData, fetchData } = getUserData(userName.value);
+
+    onMounted(() => {
+      fetchData();
+    });
+
+    onUpdated(() => {
+      fetchData();
+    });
 
     return {
       pageName,
+      userName,
+      userData,
     };
   },
 };
