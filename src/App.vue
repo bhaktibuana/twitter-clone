@@ -4,11 +4,52 @@
 </template>
 
 <script>
+import { onMounted } from "vue";
 import SideNav from "./components/sideNav/SideNav.vue";
 
 export default {
   components: {
     SideNav,
+  },
+  setup() {
+    const userData = [
+      {
+        id: 1,
+        name: "Bhakti Buana",
+        username: "hexorascii",
+        image: "user.jpg",
+        banner: "banner.jpg",
+        address: "Nganjuk, Jawa Timur",
+        joined: "2011-04-03",
+        tweets: 0,
+        following: 205,
+        followers: 283,
+        bio: "Web Development Enthusiast",
+      },
+    ];
+
+    const tweets = [];
+
+    // const tweets = [
+    //   {
+    //     tweet_id: 1,
+    //     user_id: 1,
+    //     posted: "2019-01-01",
+    //     tweet: "lorem ipsum",
+    //   },
+    // ];
+
+    onMounted(() => {
+      if (!localStorage.getItem("user")) {
+        localStorage.setItem("user", JSON.stringify(userData));
+      }
+
+      if (!localStorage.getItem("tweet")) {
+        localStorage.setItem("tweet", JSON.stringify(tweets));
+      }
+    });
+
+    return {};
   },
 };
 </script>

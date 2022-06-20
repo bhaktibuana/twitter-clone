@@ -8,6 +8,8 @@ import {
   faUser,
   faFeatherPointed,
   faArrowLeft,
+  faLocationDot,
+  faCalendarDays,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -17,7 +19,9 @@ library.add(
   faBell,
   faUser,
   faFeatherPointed,
-  faArrowLeft
+  faArrowLeft,
+  faLocationDot,
+  faCalendarDays
 );
 
 export default FontAwesomeIcon;

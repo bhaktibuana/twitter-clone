@@ -7,8 +7,8 @@
     </div>
 
     <div class="nav-info" v-if="isProfile">
-      <h1 class="nav-title">Bhakti</h1>
-      <p class="nav-subtitle">2,327 Tweets</p>
+      <h1 class="nav-title">{{ userData.name }}</h1>
+      <p class="nav-subtitle">{{ tweets }}</p>
     </div>
 
     <div class="nav-info" v-else>
@@ -18,15 +18,29 @@
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
+import { useStore } from "vuex";
 import { useRouter } from "vue-router";
+import getUserData from "../utils/getUserData";
 
 export default {
   props: ["pageName"],
   setup(props) {
+    const store = useStore();
     const router = useRouter();
     const showHistory = ref(false);
     const isProfile = ref(false);
+    const user = computed(() => store.state.userData);
+    const userName = computed(() => store.state.userName);
+    const { userData, fetchData } = getUserData(userName.value);
+
+    const tweets = computed(() => {
+      if (userData.value.tweets > 1) {
+        return `${userData.value.tweets.toLocaleString("en-US")} Tweets`;
+      } else {
+        return `${userData.value.tweets} Tweet`;
+      }
+    });
 
     const condition = (pageName) => {
       if (pageName === "Profile") {
@@ -48,12 +62,15 @@ export default {
 
     onMounted(() => {
       condition(props.pageName);
+      fetchData();
     });
 
     return {
       handleGoBack,
       showHistory,
       isProfile,
+      userData,
+      tweets,
     };
   },
 };
