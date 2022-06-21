@@ -84,7 +84,7 @@
 </template>
 
 <script>
-import { ref, onMounted, onUpdated, computed } from "vue";
+import { ref, onMounted, onUpdated, computed, onBeforeMount } from "vue";
 import { useStore } from "vuex";
 import setPageName from "../utils/setPageName";
 import Search from "../components/Search.vue";
@@ -137,6 +137,10 @@ export default {
     onMounted(() => {
       changePageName();
       topOffset.value = countOffset(rghtContent.value.clientHeight);
+    });
+
+    onBeforeMount(() => {
+      document.title = `Egg Twitter - ${userData.value.name}`;
     });
 
     return {
