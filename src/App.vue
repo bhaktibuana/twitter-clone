@@ -1,17 +1,43 @@
 <template>
-  <SideNav />
-  <router-view />
+  <SideNav @setIsVisible="handleComposeModal" />
+  <ComposeModal
+    :isVisible="showComposeModal"
+    @setIsVisible="handleComposeModal"
+    @handlePost="handlePost"
+  />
+  <router-view :isPostData="isPostData" @handlePostState="handlePost" />
 </template>
 
 <script>
-import { onBeforeMount } from "vue";
+import { ref, onBeforeMount, watch } from "vue";
 import SideNav from "./components/sideNav/SideNav.vue";
+import ComposeModal from "./components/ComposeModal.vue";
 
 export default {
   components: {
     SideNav,
+    ComposeModal,
   },
   setup() {
+    const showComposeModal = ref(false);
+    const isPostData = ref(false);
+
+    const handleComposeModal = (value) => {
+      showComposeModal.value = value;
+    };
+
+    const handlePost = (value) => {
+      isPostData.value = value;
+    };
+
+    watch(showComposeModal, () => {
+      if (showComposeModal.value) {
+        document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.overflow = "auto";
+      }
+    });
+
     const userData = [
       {
         id: 1,
@@ -28,28 +54,7 @@ export default {
       },
     ];
 
-    // const tweets = [];
-
-    const tweets = [
-      {
-        tweet_id: 1,
-        user_id: 1,
-        posted: "Jun 19 2022 10:29:09",
-        tweet: "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
-      },
-      {
-        tweet_id: 2,
-        user_id: 1,
-        posted: "Jun 20 2022 10:29:09",
-        tweet: "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
-      },
-      {
-        tweet_id: 3,
-        user_id: 1,
-        posted: "Jun 21 2022 10:29:09",
-        tweet: "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
-      },
-    ];
+    const tweets = [];
 
     onBeforeMount(() => {
       if (!localStorage.getItem("user")) {
@@ -61,7 +66,12 @@ export default {
       }
     });
 
-    return {};
+    return {
+      showComposeModal,
+      handleComposeModal,
+      handlePost,
+      isPostData,
+    };
   },
 };
 </script>

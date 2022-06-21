@@ -17,6 +17,7 @@ import {
   faRetweet,
   faHeart,
   faArrowUpFromBracket,
+  faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -35,7 +36,8 @@ library.add(
   faComment,
   faRetweet,
   faHeart,
-  faArrowUpFromBracket
+  faArrowUpFromBracket,
+  faXmark
 );
 
 export default FontAwesomeIcon;

@@ -61,7 +61,8 @@ export default {
     Compose,
     Tweet,
   },
-  setup() {
+  props: ["isPostData"],
+  setup(props, { emit }) {
     const { pageName, changePageName } = setPageName("Home");
     const rghtContent = ref(null);
     const topOffset = ref(0);
@@ -91,6 +92,16 @@ export default {
       fetchTweetsData();
       handlePost(false);
     });
+
+    watch(
+      () => props.isPostData,
+      () => {
+        if (props.isPostData) {
+          fetchTweetsData();
+          emit("handlePostState", false);
+        }
+      }
+    );
 
     onUpdated(() => {
       topOffset.value = countOffset(rghtContent.value.clientHeight);

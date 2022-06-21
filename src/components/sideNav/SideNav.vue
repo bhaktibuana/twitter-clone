@@ -38,7 +38,7 @@
       </div>
 
       <div class="tweet-button">
-        <button>
+        <button @click="handleOpenModal">
           <span class="icon">
             <font-awesome-icon icon="fa-solid fa-feather-pointed" size="1x" />
           </span>
@@ -74,7 +74,7 @@ export default {
   components: {
     SideNavItem,
   },
-  setup() {
+  setup(props, { emit }) {
     const store = useStore();
     const pageName = computed(() => store.state.pageName);
     const userName = computed(() => store.state.userName);
@@ -83,6 +83,10 @@ export default {
 
     const imageUrlParse = () => {
       imageUrl.value = require(`../../assets/${userData.value.image}`);
+    };
+
+    const handleOpenModal = () => {
+      emit("setIsVisible", true);
     };
 
     onMounted(() => {
@@ -100,6 +104,7 @@ export default {
       userData,
       isLoading,
       imageUrl,
+      handleOpenModal,
     };
   },
 };

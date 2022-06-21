@@ -30,15 +30,24 @@ export default {
     const router = useRouter();
     const showHistory = ref(false);
     const isProfile = ref(false);
-    const user = computed(() => store.state.userData);
     const userName = computed(() => store.state.userName);
     const { userData, fetchData } = getUserData(userName.value);
 
     const tweets = computed(() => {
-      if (userData.value.tweets > 1) {
-        return `${userData.value.tweets.toLocaleString("en-US")} Tweets`;
+      const tweetsData = JSON.parse(localStorage.getItem("tweets"));
+
+      if (tweetsData.length > 0) {
+        const userTweet = tweetsData.filter(
+          (tweet) => tweet.user_id === userData.value.id
+        );
+
+        if (userTweet.length > 1) {
+          return `${userTweet.length.toLocaleString("en-US")} Tweets`;
+        } else {
+          return `${userTweet.length} Tweet`;
+        }
       } else {
-        return `${userData.value.tweets} Tweet`;
+        return `0 Tweet`;
       }
     });
 
