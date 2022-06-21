@@ -18,7 +18,7 @@
         <SideNavItem
           :pageName="pageName"
           :title="'Search'"
-          :param="'asd'"
+          :param="'any'"
           :icon="'fa-magnifying-glass'"
         />
 

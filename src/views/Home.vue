@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { ref, onMounted, onUpdated, watch } from "vue";
+import { ref, onMounted, onUpdated, watch, onBeforeMount } from "vue";
 import setPageName from "../utils/setPageName";
 import Search from "../components/Search.vue";
 import Trends from "../components/trends/Trends.vue";
@@ -111,6 +111,10 @@ export default {
       changePageName();
       topOffset.value = countOffset(rghtContent.value.clientHeight);
       fetchTweetsData();
+    });
+
+    onBeforeMount(() => {
+      document.title = "Egg Twitter";
     });
 
     return {

@@ -5,6 +5,8 @@
     @setIsVisible="handleComposeModal"
     @handlePost="handlePost"
   />
+  <FloatingNav @setIsVisible="handleComposeModal" />
+  <BtmNav />
   <router-view :isPostData="isPostData" @handlePostState="handlePost" />
 </template>
 
@@ -12,11 +14,15 @@
 import { ref, onBeforeMount, watch } from "vue";
 import SideNav from "./components/sideNav/SideNav.vue";
 import ComposeModal from "./components/ComposeModal.vue";
+import BtmNav from "./components/btmNav/BtmNav.vue";
+import FloatingNav from "./components/FloatingNav.vue";
 
 export default {
   components: {
     SideNav,
     ComposeModal,
+    BtmNav,
+    FloatingNav,
   },
   setup() {
     const showComposeModal = ref(false);
@@ -64,6 +70,8 @@ export default {
       if (!localStorage.getItem("tweets")) {
         localStorage.setItem("tweets", JSON.stringify(tweets));
       }
+
+      document.title = "Egg Twitter";
     });
 
     return {

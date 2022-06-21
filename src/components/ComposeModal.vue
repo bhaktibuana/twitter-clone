@@ -4,8 +4,12 @@
       <div class="modal-header">
         <div class="modal-header-container">
           <div class="close-icon">
-            <div class="icon" @click="handleClose">
+            <div class="icon-cross" @click="handleClose">
               <font-awesome-icon icon="fa-solid fa-xmark" size="1x" />
+            </div>
+
+            <div class="icon-arrow" @click="handleClose">
+              <font-awesome-icon icon="fa-solid fa-arrow-left" size="1x" />
             </div>
           </div>
         </div>
@@ -230,7 +234,28 @@ export default {
         height: 100%;
         align-items: center;
 
-        & > .icon {
+        & > .icon-cross {
+          display: none;
+          width: 34px;
+          height: 34px;
+          align-items: center;
+          justify-content: center;
+          color: var(--TEXT_COLOR_0);
+          font-size: 1.2rem;
+          border-radius: 50%;
+          cursor: pointer;
+          transition: all 0.2s ease-in-out;
+
+          &:hover {
+            background: var(--BG_COLOR_4);
+          }
+
+          @media screen and (min-width: 500px) {
+            display: flex;
+          }
+        }
+
+        & > .icon-arrow {
           display: flex;
           width: 34px;
           height: 34px;
@@ -244,6 +269,10 @@ export default {
 
           &:hover {
             background: var(--BG_COLOR_4);
+          }
+          
+          @media screen and (min-width: 500px) {
+            display: none;
           }
         }
       }
