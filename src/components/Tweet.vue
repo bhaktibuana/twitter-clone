@@ -14,7 +14,7 @@
             <p class="username">· @{{ userData.username }}</p>
           </div>
 
-          <div class="delete-icon">
+          <div class="delete-icon" @click="deteTweetById">
             <font-awesome-icon icon="fa-solid fa-trash" size="1x" />
           </div>
         </div>
@@ -61,7 +61,7 @@ import * as moment from "moment";
 
 export default {
   props: ["tweetId", "userId", "tweetDate", "tweetText"],
-  setup(props) {
+  setup(props, { emit }) {
     const userData = ref([]);
 
     const date = computed(() => {
@@ -75,22 +75,6 @@ export default {
     const calendar = computed(() => {
       return getCalendar(props.tweetDate);
     });
-
-    const getUserById = async () => {
-      try {
-        const localData = await JSON.parse(localStorage.getItem("user"));
-
-        if (localData) {
-          userData.value = localData.filter(
-            (user) => user.id === props.userId
-          )[0];
-        } else {
-          throw new Error("No data found");
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
 
     const dateConvert = (strDate) => {
       const date = new Date(strDate).getTime();
@@ -117,6 +101,41 @@ export default {
       }
     };
 
+    const getUserById = async () => {
+      try {
+        const localData = await JSON.parse(localStorage.getItem("user"));
+
+        if (localData) {
+          userData.value = localData.filter(
+            (user) => user.id === props.userId
+          )[0];
+        } else {
+          throw new Error("No data found");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const deteTweetById = async () => {
+      try {
+        const tweetsData = await JSON.parse(localStorage.getItem("tweets"));
+
+        if (tweetsData) {
+          const temp = tweetsData.filter(
+            (tweet) => tweet.tweet_id !== props.tweetId
+          );
+
+          localStorage.setItem("tweets", JSON.stringify(temp));
+          emit("handleDelete", true);
+        } else {
+          throw new Error("No data found");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     onMounted(() => {
       getUserById();
     });
@@ -126,6 +145,7 @@ export default {
       time,
       calendar,
       userData,
+      deteTweetById,
     };
   },
 };
@@ -239,9 +259,11 @@ export default {
         margin: 2px 0;
 
         & > p {
+          width: 100%;
           font-size: 1rem;
           color: var(--TEXT_COLOR_0);
           margin: 0;
+          overflow-wrap: anywhere;
         }
       }
 

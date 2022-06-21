@@ -20,6 +20,8 @@ export default {
       const rest = maxValue - length;
 
       progressValue.value.textContent = rest <= 20 ? `${rest}` : "";
+      progressBar.value.style.width = "calc(100% - (100% / 3))";
+      progressBar.value.style.height = "calc(100% - (100% / 3))";
       progressValue.value.style.color = "var(--TEXT_COLOR_0)";
       progressBar.value.style.background = `conic-gradient(
         var(--PRIMARY_COLOR) ${length * (360 / maxValue)}deg,

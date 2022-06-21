@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import { onMounted } from "vue";
+import { onBeforeMount } from "vue";
 import SideNav from "./components/sideNav/SideNav.vue";
 
 export default {
@@ -51,7 +51,7 @@ export default {
       },
     ];
 
-    onMounted(() => {
+    onBeforeMount(() => {
       if (!localStorage.getItem("user")) {
         localStorage.setItem("user", JSON.stringify(userData));
       }

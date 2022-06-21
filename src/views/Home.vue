@@ -4,7 +4,7 @@
       <TopNav :pageName="'Home'" />
 
       <div class="page-content">
-        <Compose />
+        <Compose @handlePost="handlePost" />
 
         <div class="line-break" />
 
@@ -18,6 +18,7 @@
             :userId="td.user_id"
             :tweetDate="td.posted"
             :tweetText="td.tweet"
+            @handleDelete="handleDelete"
           />
         </div>
       </div>
@@ -39,7 +40,7 @@
 </template>
 
 <script>
-import { ref, onMounted, onUpdated } from "vue";
+import { ref, onMounted, onUpdated, watch } from "vue";
 import setPageName from "../utils/setPageName";
 import Search from "../components/Search.vue";
 import Trends from "../components/trends/Trends.vue";
@@ -65,11 +66,31 @@ export default {
     const rghtContent = ref(null);
     const topOffset = ref(0);
     const { tweetsData, fetchTweetsData } = getTweetsData();
+    const isDelete = ref(false);
+    const isPost = ref(false);
 
     const countOffset = (elHeight) => {
       const result = window.innerHeight - elHeight;
       return Math.abs(result) * -1;
     };
+
+    const handleDelete = (value) => {
+      isDelete.value = value;
+    };
+
+    const handlePost = (value) => {
+      isPost.value = value;
+    };
+
+    watch(isDelete, () => {
+      fetchTweetsData();
+      handleDelete(false);
+    });
+
+    watch(isPost, () => {
+      fetchTweetsData();
+      handlePost(false);
+    });
 
     onUpdated(() => {
       topOffset.value = countOffset(rghtContent.value.clientHeight);
@@ -86,6 +107,9 @@ export default {
       rghtContent,
       topOffset,
       tweetsData,
+      isDelete,
+      handleDelete,
+      handlePost,
     };
   },
 };
