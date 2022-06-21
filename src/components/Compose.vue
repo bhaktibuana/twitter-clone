@@ -3,7 +3,7 @@
     <div class="compose-container">
       <div class="left-content">
         <div class="profile-image">
-          <img src="../assets/user.jpg" alt="user" />
+          <img :src="imageUrl" alt="user" />
         </div>
       </div>
 
@@ -14,7 +14,7 @@
             placeholder="What's happening?"
             ref="compose"
             @keyup="handleTaKeyUp"
-            @keydown="handleTaKeyUp"
+            @keydown="handleTaKeyDown"
             v-model="composeText"
           />
         </div>
@@ -39,7 +39,11 @@
               <CircularProgress :textLength="textLength" />
             </div>
 
-            <button class="button-tweet" :disabled="tweetBtnDisabled">
+            <button
+              class="button-tweet"
+              :disabled="tweetBtnDisabled"
+              @click="postTweet"
+            >
               Tweet
             </button>
           </div>
@@ -50,18 +54,42 @@
 </template>
 
 <script>
+import { useStore } from "vuex";
 import { ref, onMounted, onUpdated, computed } from "vue";
 import CircularProgress from "../components/CircularProgress.vue";
+import postTweetData from "../utils/postTweetData";
 
 export default {
   components: {
     CircularProgress,
   },
-  setup() {
+  setup(props, { emit }) {
+    const store = useStore();
+    const userData = computed(() => store.state.userData);
     const compose = ref(null);
     const tweetBtnDisabled = ref(true);
     const composeText = ref("");
     const textLength = computed(() => composeText.value.length);
+    const tweetData = ref({});
+
+    const handleTweetData = () => {
+      tweetData.value = {
+        tweet_id: null,
+        user_id: userData.value.id,
+        posted: new Date().toISOString(),
+        tweet: composeText.value,
+      };
+    };
+
+    const postTweet = () => {
+      postTweetData(tweetData.value);
+      emit("handlePost", true);
+      composeText.value = "";
+    };
+
+    const imageUrl = computed(() => {
+      return require(`../assets/${userData.value.image}`);
+    });
 
     const handleComposeHeight = () => {
       compose.value.style.height = "30px";
@@ -69,7 +97,7 @@ export default {
     };
 
     const handleTaKeyUp = () => {
-      if (textLength.value > 280) {
+      if (textLength.value >= 280) {
         tweetBtnDisabled.value = true;
         composeText.value = composeText.value.slice(0, 280);
       } else if (textLength.value > 0) {
@@ -78,6 +106,25 @@ export default {
         tweetBtnDisabled.value = true;
       }
 
+      handleTweetData();
+      handleComposeHeight();
+    };
+
+    const handleTaKeyDown = (e) => {
+      if (e.ctrlKey && e.key === "Enter" && tweetBtnDisabled.value === false) {
+        postTweet();
+      }
+
+      if (textLength.value >= 280) {
+        tweetBtnDisabled.value = true;
+        composeText.value = composeText.value.slice(0, 280);
+      } else if (textLength.value > 0) {
+        tweetBtnDisabled.value = false;
+      } else {
+        tweetBtnDisabled.value = true;
+      }
+
+      handleTweetData();
       handleComposeHeight();
     };
 
@@ -92,9 +139,12 @@ export default {
     return {
       compose,
       handleTaKeyUp,
+      handleTaKeyDown,
       composeText,
       textLength,
       tweetBtnDisabled,
+      imageUrl,
+      postTweet,
     };
   },
 };

@@ -51,7 +51,7 @@
       <router-link :to="{ name: 'Profile', params: { param: userName } }">
         <div class="user-container">
           <div class="image-container">
-            <img src="../../assets/user.jpg" alt="user" />
+            <img :src="imageUrl" alt="user" v-if="!isLoading" />
           </div>
 
           <div class="user-info">
@@ -66,7 +66,7 @@
 
 <script>
 import { useStore } from "vuex";
-import { computed, onMounted, onUpdated } from "vue";
+import { ref, computed, onMounted, onUpdated } from "vue";
 import SideNavItem from "./SideNavItem.vue";
 import getUserData from "../../utils/getUserData";
 
@@ -78,7 +78,12 @@ export default {
     const store = useStore();
     const pageName = computed(() => store.state.pageName);
     const userName = computed(() => store.state.userName);
-    const { userData, fetchData } = getUserData(userName.value);
+    const imageUrl = ref("");
+    const { userData, isLoading, fetchData } = getUserData(userName.value);
+
+    const imageUrlParse = () => {
+      imageUrl.value = require(`../../assets/${userData.value.image}`);
+    };
 
     onMounted(() => {
       fetchData();
@@ -86,12 +91,15 @@ export default {
 
     onUpdated(() => {
       fetchData();
+      imageUrlParse();
     });
 
     return {
       pageName,
       userName,
       userData,
+      isLoading,
+      imageUrl,
     };
   },
 };
