@@ -28,24 +28,36 @@ export default {
       },
     ];
 
-    const tweets = [];
+    // const tweets = [];
 
-    // const tweets = [
-    //   {
-    //     tweet_id: 1,
-    //     user_id: 1,
-    //     posted: "2019-01-01",
-    //     tweet: "lorem ipsum",
-    //   },
-    // ];
+    const tweets = [
+      {
+        tweet_id: 1,
+        user_id: 1,
+        posted: "Jun 19 2022 10:29:09",
+        tweet: "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
+      },
+      {
+        tweet_id: 2,
+        user_id: 1,
+        posted: "Jun 20 2022 10:29:09",
+        tweet: "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
+      },
+      {
+        tweet_id: 3,
+        user_id: 1,
+        posted: "Jun 21 2022 10:29:09",
+        tweet: "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
+      },
+    ];
 
     onMounted(() => {
       if (!localStorage.getItem("user")) {
         localStorage.setItem("user", JSON.stringify(userData));
       }
 
-      if (!localStorage.getItem("tweet")) {
-        localStorage.setItem("tweet", JSON.stringify(tweets));
+      if (!localStorage.getItem("tweets")) {
+        localStorage.setItem("tweets", JSON.stringify(tweets));
       }
     });
 
@@ -68,6 +80,9 @@ html {
 
 :root {
   --PRIMARY_COLOR: rgb(29, 155, 240);
+  --SUCCESS_COLOR: rgb(0, 186, 124);
+  --WARING_COLOR: rgb(255, 212, 0);
+  --DANGER_COLOR: rgb(244, 33, 46);
   --BG_COLOR_0: rgb(255, 255, 255);
   --BG_COLOR_1: rgb(247, 249, 249);
   --BG_COLOR_2: rgb(239, 243, 244);

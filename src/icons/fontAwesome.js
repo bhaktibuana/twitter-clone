@@ -10,6 +10,13 @@ import {
   faArrowLeft,
   faLocationDot,
   faCalendarDays,
+  faImage,
+  faFaceSmile,
+  faTrash,
+  faComment,
+  faRetweet,
+  faHeart,
+  faArrowUpFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -21,7 +28,14 @@ library.add(
   faFeatherPointed,
   faArrowLeft,
   faLocationDot,
-  faCalendarDays
+  faCalendarDays,
+  faImage,
+  faFaceSmile,
+  faTrash,
+  faComment,
+  faRetweet,
+  faHeart,
+  faArrowUpFromBracket
 );
 
 export default FontAwesomeIcon;
