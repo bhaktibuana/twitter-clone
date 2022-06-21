@@ -2,9 +2,24 @@
   <div class="home">
     <div class="left-content-container">
       <TopNav :pageName="'Home'" />
-      
-      <div class="page-content">
 
+      <div class="page-content">
+        <Compose />
+
+        <div class="line-break" />
+
+        <div
+          class="tweets-container"
+          v-for="td in tweetsData"
+          :key="td.tweet_id"
+        >
+          <Tweet
+            :tweetId="td.tweet_id"
+            :userId="td.user_id"
+            :tweetDate="td.posted"
+            :tweetText="td.tweet"
+          />
+        </div>
       </div>
     </div>
 
@@ -31,6 +46,9 @@ import Trends from "../components/trends/Trends.vue";
 import Suggest from "../components/suggest/Suggest.vue";
 import Footer from "../components/Footer.vue";
 import TopNav from "../components/TopNav.vue";
+import Compose from "../components/Compose.vue";
+import Tweet from "../components/Tweet.vue";
+import getTweetsData from "../utils/getTweetsData";
 
 export default {
   components: {
@@ -39,11 +57,14 @@ export default {
     Suggest,
     Footer,
     TopNav,
+    Compose,
+    Tweet,
   },
   setup() {
     const { pageName, changePageName } = setPageName("Home");
     const rghtContent = ref(null);
     const topOffset = ref(0);
+    const { tweetsData, fetchTweetsData } = getTweetsData();
 
     const countOffset = (elHeight) => {
       const result = window.innerHeight - elHeight;
@@ -57,12 +78,14 @@ export default {
     onMounted(() => {
       changePageName();
       topOffset.value = countOffset(rghtContent.value.clientHeight);
+      fetchTweetsData();
     });
 
     return {
       pageName,
       rghtContent,
       topOffset,
+      tweetsData,
     };
   },
 };
@@ -140,9 +163,24 @@ export default {
   & > .page-content {
     display: flex;
     width: 100%;
-    height: 500px;
+    height: auto;
+    min-height: 100vh;
     flex-direction: column;
     align-items: center;
+
+    & > .line-break {
+      display: flex;
+      width: 100%;
+      height: 1px;
+      margin: 4px 0;
+    }
+
+    & > .tweets-container {
+      display: flex;
+      width: 100%;
+      height: auto;
+      flex-direction: column;
+    }
   }
 }
 

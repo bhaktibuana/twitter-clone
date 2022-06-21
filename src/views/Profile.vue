@@ -273,7 +273,7 @@ export default {
             align-items: center;
             justify-content: center;
             background: var(--BG_COLOR_0);
-            border-radius: 100%;
+            border-radius: 50%;
             padding: 3px;
 
             @media screen and (min-width: 500px) {
@@ -283,7 +283,7 @@ export default {
             & > img.user {
               width: 100%;
               object-fit: cover;
-              border-radius: 100%;
+              border-radius: 50%;
               aspect-ratio: 1 / 1;
             }
           }
